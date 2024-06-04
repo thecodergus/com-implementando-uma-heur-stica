@@ -1,0 +1,71 @@
+# Este arquivo define as configurações de construção para o projeto 'santista_2' usando o sistema de construção Meson.
+# O projeto é escrito em C++ e usa o padrão C++20.
+
+# Define o nome do projeto, a linguagem de programação utilizada e o padrão de linguagem.
+project('santista_2', 'cpp', default_options : ['cpp_std=c++20'])
+
+# Inicializa uma lista de argumentos de compilação com a flag '-gdwarf-4', que é usada para depuração.
+cpp_args = [
+  '-gdwarf-4'
+]
+
+# Obtém o objeto do compilador C++ atualmente em uso pelo Meson.
+cc = meson.get_compiler('cpp')
+
+# Verifica se o compilador em uso é GCC ou Clang.
+# Se for, adiciona a flag '-Wno-deprecated' para desativar avisos sobre recursos depreciados.
+if cc.get_id() == 'g++' or cc.get_id() == 'clang++'
+  cpp_args += '-Wno-deprecated'
+endif
+
+# Define os diretórios que contêm arquivos de cabeçalho (.h, .hpp) que serão incluídos no projeto.
+inc = include_directories('include', '/usr/local/include')
+
+# Define as dependências externas necessárias para o projeto e verifica se estão instaladas.
+
+# Importa o módulo Qt5 do Meson e define as subdependências necessárias dentro do Qt5.
+qt5 = import('qt5')
+qt5_dep = dependency('qt5', modules: [
+  'Core', 
+  'Widgets', 
+  'Gui', 
+  'Concurrent'
+])
+
+# Compila os arquivos de cabeçalho que necessitam do processamento do MOC (Meta-Object Compiler) do Qt5.
+moc_files = qt5.compile_moc(headers : [
+                # arquivos de cabeçalho que usei Qt
+              ],
+              extra_args: ['-DMAKES_MY_MOC_HEADER_COMPILE'],
+              include_directories: inc,
+              dependencies: qt5_dep
+)
+
+# Lista de arquivos de código-fonte relacionados às páginas e componentes da interface do usuário Qt.
+qt_pages = files(
+  # Arquivos source que usei Qt
+)
+
+# Lista de arquivos de código-fonte que são comuns e reutilizados em várias partes do projeto.
+common_src = files(
+  # Arquivos qualquer sem Qt
+)
+
+# Arquivo de código-fonte principal que contém a função 'main' do programa.
+app_src = files('src/main.cpp')
+
+# Define o executável final do projeto, especificando suas fontes, diretórios de inclusão, dependências e outras opções.
+executable('santista_2', 
+    sources : [
+      common_src,
+      app_src,
+      qt_pages,
+      moc_files
+    ], 
+    include_directories : inc, 
+    dependencies: [
+      qt5_dep,
+    ],
+    install: true,  # Indica que o executável deve ser instalado no sistema.
+    cpp_args : cpp_args  # Utiliza os argumentos de compilação definidos anteriormente.
+)
