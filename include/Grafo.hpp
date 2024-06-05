@@ -12,6 +12,8 @@
 #include <set>
 #include <string>
 #include <map>
+#include <utility>
+#include <functional>
 
 class Grafo{
     public:
@@ -22,8 +24,11 @@ class Grafo{
 
         void add_edges(const std::pair<size_t, size_t> &a, const std::pair<size_t, size_t> &b);
         void exibir_mapa();
+        void redefinir_mapa(const std::vector<std::pair<size_t, size_t>>& menor_caminho);
 };
 
 std::shared_ptr<Grafo> createGraphFromFile(const std::string &filename);
+
+void exibir_menor_caminho(const std::vector<std::pair<size_t, size_t>> &menor_caminho);
 
 #endif

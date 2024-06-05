@@ -84,10 +84,29 @@ std::shared_ptr<Grafo> createGraphFromFile(const std::string &filename)
 }
 
 void Grafo::exibir_mapa(){
+    std::cout << "Numero de linhas: " << num_linhas << std::endl;
+    std::cout << "Numero de colunas: " << num_colunas << std::endl;
     for(size_t i{}; i < num_linhas; i++){
         for(size_t j{}; j < num_colunas; j++){
             std::cout << mapa[{i, j}];
         }
         std::cout << std::endl;
     }
+}
+
+
+
+void Grafo::redefinir_mapa(const std::vector<std::pair<size_t, size_t>> &menor_caminho){
+    for(auto passo : menor_caminho){
+        mapa[passo] = '2';
+    }
+}
+
+void exibir_menor_caminho(const std::vector<std::pair<size_t, size_t>> &menor_caminho){
+    std::cout << "Tamanho do caminho: " << menor_caminho.size() << std::endl;
+    for (auto a : menor_caminho)
+    {
+        std::cout << "<" << a.first << ", " << a.second << ">, ";
+    }
+    std::cout << std::endl;
 }

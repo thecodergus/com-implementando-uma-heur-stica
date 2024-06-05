@@ -5,11 +5,13 @@
 int main(){
 
     auto grafo = createGraphFromFile("../mapa01.txt");
+    auto menor_caminho = grafo->a_star({1, 1}, {23, 51});
 
+    exibir_menor_caminho(menor_caminho);
 
-    std::cout << "Linhas: " << grafo->num_linhas << std::endl;
-    std::cout << "Colunas: " << grafo->num_colunas << std::endl;
-    grafo->exibir_mapa();
+    // grafo->redefinir_mapa();
+
+    // grafo->exibir_mapa();
 
     return 0;
 }
