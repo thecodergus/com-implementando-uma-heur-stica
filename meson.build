@@ -16,7 +16,7 @@ inc = include_directories('include', '/usr/local/include')
 # Importa os arquivos de código fonte
 app_src = files(
   'src/main.cpp',
-  'src/Grafo.cc'
+  'src/grafo.cc'
 )
 
 # Local para importar as dependencias

@@ -1,4 +1,4 @@
-#include "Grafo.hpp"
+#include "grafo.hpp"
 
 void Grafo::add_edges(const std::pair<size_t, size_t> &a, const std::pair<size_t, size_t> &b)
 {
