@@ -2,17 +2,16 @@
 
 #include "grafo.hpp"
 
-int main(){
+int main() {
+  auto grafo = createGraphFromFile("../mapa01.txt");
 
-    auto grafo = createGraphFromFile("../mapa01.txt");
-    
-    grafo->exibir_edges();
+  // grafo->exibir_edges();
 
-    // exibir_menor_caminho(menor_caminho);
+  // exibir_menor_caminho(menor_caminho);
 
-    // grafo->redefinir_mapa();
+  // grafo->redefinir_mapa();
 
-    // grafo->exibir_mapa();
+  // grafo->exibir_mapa();
 
-    return 0;
+  return 0;
 }
