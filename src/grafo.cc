@@ -115,3 +115,19 @@ void exibir_menor_caminho(const std::vector<std::pair<size_t, size_t>> &menor_ca
     }
     std::cout << std::endl;
 }
+
+std::vector<std::pair<size_t, size_t>> Grafo::estrela(const std::pair<size_t, size_t> &origem, const std::pair<size_t, size_t> &destino){
+
+}
+
+std::vector<std::pair<size_t, size_t>> Grafo::vizinhos(const std::pair<size_t, size_t> &a){
+    std::vector<std::pair<size_t, size_t>> resultado;
+
+    for (auto &item : edges){
+        if(item.first == a){
+            resultado.push_back(item.second);
+        }
+    }
+
+    return resultado;
+}

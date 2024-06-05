@@ -25,6 +25,11 @@ class Grafo{
         void add_edges(const std::pair<size_t, size_t> &a, const std::pair<size_t, size_t> &b);
         void exibir_mapa();
         void redefinir_mapa(const std::vector<std::pair<size_t, size_t>>& menor_caminho);
+
+        std::vector<std::pair<size_t, size_t>> estrela(const std::pair<size_t, size_t> &origem, const std::pair<size_t, size_t> &destino);
+
+    private:
+        std::vector<std::pair < size_t, size_t>> vizinhos(const std::pair<size_t, size_t> & a);
 };
 
 std::shared_ptr<Grafo> createGraphFromFile(const std::string &filename);
