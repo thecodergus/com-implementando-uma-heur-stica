@@ -113,7 +113,7 @@ std::vector<std::pair<size_t, size_t>> Grafo::estrela(
   // total
 
   while (!paraVisitar.empty()) {
-    paraVisitar = ordernar(paraVisitar, destino);
+    // paraVisitar = ordernar(paraVisitar, destino);
 
     std::pair<size_t, size_t> nodo_atual = paraVisitar.back();
     paraVisitar.pop_back();
@@ -146,7 +146,7 @@ std::vector<std::pair<size_t, size_t>> Grafo::estrela(
                                           item) != visitados.end();
                        }),
         vizinhos.end());  // Remove os itens já visitados
-    vizinhos = ordernar(vizinhos, destino);
+    // vizinhos = ordernar(vizinhos, destino);
 
     for (auto& vizinho : vizinhos) {
       paraVisitar.push_back(vizinho);
@@ -184,19 +184,17 @@ void Grafo::exibir_edges() {
   }
 }
 
-size_t distancia(const std::pair<size_t, size_t>& a,
-                 const std::pair<size_t, size_t>& b) {
+size_t Grafo::distancia(const std::pair<size_t, size_t>& a,
+                        const std::pair<size_t, size_t>& b) {
   return std::max(abs(a.first - b.first), abs(a.second - b.second));
 }
 
-std::vector<std::pair<size_t, size_t>> ordernar(
-    const std::vector<std::pair<size_t, size_t>>& vetor,
-    const std::pair<size_t, size_t>& destino) {
-  std::sort(vetor.begin(), vetor.end(),
-            [&destino](const std::pair<size_t, size_t>& a,
-                       const std::pair<size_t, size_t>& b) {
-              return distancia(a, destino) > distancia(b, destino);
-            });
+// std::vector<std::pair<size_t, size_t>> ordernar(
+//     const std::vector<std::pair<size_t, size_t>>& vetor,
+//     const std::pair<size_t, size_t>& destino) {
+//   std::sort(vetor.begin(), vetor.end(), [&destino](auto a, auto b) {
+//     return distancia(a, destino) > distancia(b, destino);
+//   });
 
-  return vetor;
-}
+//   return vetor;
+// }
