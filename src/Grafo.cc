@@ -1,8 +1,8 @@
 #include "Grafo.hpp"
 
-void Grafo::add_edges(const std::pair<int, int> &a, const std::pair<int, int> &b)
+void Grafo::add_edges(const std::pair<size_t, size_t> &a, const std::pair<size_t, size_t> &b)
 {
-    std::pair<std::pair<int, int>, std::pair<int, int>> aresta = std::make_pair(a, b);
+    std::pair<std::pair<size_t, size_t>, std::pair<size_t, size_t>> aresta = std::make_pair(a, b);
     edges.push_back(aresta);
 }
 
@@ -18,18 +18,23 @@ std::shared_ptr<Grafo> createGraphFromFile(const std::string &filename)
     }
 
     std::shared_ptr<Grafo> graph(new Grafo());
+    graph->num_linhas = lines.size();
+    graph->num_colunas = lines[0].size();
 
-    for (int i = 0; i < lines.size(); i++)
+    for (size_t i = 0; i < lines.size(); i++)
     {
-        for (int j = 0; j < lines[i].size(); j++)
+        for (size_t j = 0; j < lines[i].size(); j++)
         {
-            int v1 = i;
-            int v2 = j;
-            std::pair<int, int> nodo = std::make_pair(v1, v2);
+            size_t v1 = i;
+            size_t v2 = j;
+            std::pair<size_t, size_t> nodo = {v1, v2};
             graph->nodos.insert(nodo);
 
-            if (lines[i][j] == '0')
+            switch (lines[i][j])
             {
+                case '0':{
+
+                
                 graph->mapa[nodo] = "0";
 
                 if (i > 0 && lines[i - 1][j] == '0')
@@ -64,13 +69,25 @@ std::shared_ptr<Grafo> createGraphFromFile(const std::string &filename)
                 {
                     graph->add_edges(nodo, std::make_pair(v1, v2 + 1));
                 }
-            }
-            else if (lines[i][j] == '1')
-            {
-                graph->mapa[nodo] = "1";
+                }
+                break;
+                case '1':{
+                    graph->mapa[nodo] = "1";
+                }
+                break;
             }
         }
+        std::cout << std::endl;
     }
 
     return graph;
+}
+
+void Grafo::exibir_mapa(){
+    for(size_t i{}; i < num_linhas; i++){
+        for(size_t j{}; j < num_colunas; j++){
+            std::cout << mapa[{i, j}];
+        }
+        std::cout << std::endl;
+    }
 }

@@ -15,11 +15,13 @@
 
 class Grafo{
     public:
-        std::map<std::pair<int, int>, std::string> mapa;
-        std::set<std::pair<int, int>> nodos;
-        std::vector<std::pair< std::pair<int, int>, std::pair < int, int >>> edges;
+        std::map<std::pair<size_t, size_t>, std::string> mapa;
+        std::set<std::pair<size_t, size_t>> nodos;
+        std::vector<std::pair< std::pair<size_t, size_t>, std::pair < size_t, size_t >>> edges;
+        size_t num_linhas, num_colunas;
 
-        void Grafo::add_edges(const std::pair<int, int> &a, const std::pair<int, int> &b);
+        void add_edges(const std::pair<size_t, size_t> &a, const std::pair<size_t, size_t> &b);
+        void exibir_mapa();
 };
 
 std::shared_ptr<Grafo> createGraphFromFile(const std::string &filename);
