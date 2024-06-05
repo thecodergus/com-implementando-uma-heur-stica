@@ -62,7 +62,6 @@ std::shared_ptr<Grafo> createGraphFromFile(const std::string& filename) {
         } break;
       }
     }
-    std::cout << std::endl;
   }
 
   return graph;
@@ -81,12 +80,8 @@ void Grafo::exibir_mapa() {
 
 void Grafo::redefinir_mapa(
     const std::vector<std::pair<size_t, size_t>>& menor_caminho) {
-  for (auto& pair : mapa) {
-    pair.second = "#";
-  }
-
   for (auto& passo : menor_caminho) {
-    mapa[passo] = "¤";
+    mapa[passo] = "+";
   }
 }
 
@@ -102,65 +97,50 @@ void exibir_menor_caminho(
 std::vector<std::pair<size_t, size_t>> Grafo::estrela(
     const std::pair<size_t, size_t>& origem,
     const std::pair<size_t, size_t>& destino) {
-  std::vector<std::pair<size_t, size_t>> paraVisitar = {origem};
-  std::vector<std::pair<size_t, size_t>> visitados;
-  std::vector<std::pair<std::pair<size_t, size_t>, std::pair<size_t, size_t>>>
-      pais;
-  std::map<std::pair<size_t, size_t>, size_t> custos = {
-      {origem, distancia(origem, destino)}};
-  // f = g + h, g = valor do custo acumulado até o
-  // momento; h = valor do custo restante; f = custo
-  // total
+  std::map<std::pair<size_t, size_t>, size_t> distancia_g;
+  std::map<std::pair<size_t, size_t>, std::pair<size_t, size_t>> pai;
+  std::priority_queue<
+      std::pair<size_t, std::pair<size_t, size_t>>,
+      std::vector<std::pair<size_t, std::pair<size_t, size_t>>>,
+      std::greater<std::pair<size_t, std::pair<size_t, size_t>>>>
+      fila;
 
-  while (!paraVisitar.empty()) {
-    ordernar(paraVisitar, destino);
+  distancia_g[origem] = 0;
+  fila.push({0, origem});
 
-    std::pair<size_t, size_t> nodo_atual = paraVisitar.back();
-    paraVisitar.pop_back();
-    visitados.push_back(nodo_atual);
+  while (!fila.empty()) {
+    std::pair<size_t, std::pair<size_t, size_t>> atual = fila.top();
+    fila.pop();
 
-    if (nodo_atual == destino) {
-      std::vector<std::pair<size_t, size_t>> caminho{destino};
-
-      while (nodo_atual != origem) {
-        for (auto& a : pais) {
-          if (a.second == nodo_atual) {
-            nodo_atual = a.first;
-            caminho.push_back(nodo_atual);
-            break;
-          }
-        }
-      }
-
-      std::reverse(caminho.begin(), caminho.end());
-
-      return caminho;
+    if (atual.second == destino) {
+      break;
     }
 
-    std::vector<std::pair<size_t, size_t>> vizinhos{
-        this->vizinhos(nodo_atual)};  // Procura pelos visinhos do nó atual
-    vizinhos.erase(
-        std::remove_if(vizinhos.begin(), vizinhos.end(),
-                       [&visitados](const std::pair<size_t, size_t>& item) {
-                         return std::find(visitados.begin(), visitados.end(),
-                                          item) != visitados.end();
-                       }),
-        vizinhos.end());  // Remove os itens já visitados
-    ordernar(vizinhos, destino);
+    for (const auto& vizinho : vizinhos(atual.second)) {
+      size_t nova_distancia =
+          distancia_g[atual.second] + distancia(atual.second, vizinho);
 
-    for (auto& vizinho : vizinhos) {
-      paraVisitar.push_back(vizinho);
-
-      size_t custo_aux{distancia(vizinho, destino)};
-
-      if (custos[nodo_atual] > custo_aux) {
-        custos[vizinho] = custo_aux;
-        pais.push_back({nodo_atual, vizinho});
+      if (distancia_g.find(vizinho) == distancia_g.end() ||
+          nova_distancia < distancia_g[vizinho]) {
+        distancia_g[vizinho] = nova_distancia;
+        pai[vizinho] = atual.second;
+        fila.push({nova_distancia + distancia(vizinho, destino), vizinho});
       }
     }
   }
 
-  return {};
+  std::vector<std::pair<size_t, size_t>> menor_caminho;
+  std::pair<size_t, size_t> atual = destino;
+
+  while (atual != origem) {
+    menor_caminho.push_back(atual);
+    atual = pai[atual];
+  }
+
+  menor_caminho.push_back(origem);
+  std::reverse(menor_caminho.begin(), menor_caminho.end());
+
+  return menor_caminho;
 }
 
 std::vector<std::pair<size_t, size_t>> Grafo::vizinhos(
@@ -196,4 +176,11 @@ void Grafo::ordernar(std::vector<std::pair<size_t, size_t>>& vetor,
                 const std::pair<size_t, size_t>& b) {
               return distancia(a, destino) > distancia(b, destino);
             });
+}
+
+void Grafo::exibir_nodos() {
+  for (auto& no : nodos) {
+    std::cout << "<" << no.first << ", " << no.second << ">: " << mapa[no]
+              << std::endl;
+  }
 }

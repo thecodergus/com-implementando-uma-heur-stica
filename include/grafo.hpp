@@ -29,6 +29,7 @@ class Grafo {
                  const std::pair<size_t, size_t> &b);
   void exibir_mapa();
   void exibir_edges();
+  void exibir_nodos();
   void redefinir_mapa(
       const std::vector<std::pair<size_t, size_t>> &menor_caminho);
 
