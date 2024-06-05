@@ -189,12 +189,14 @@ size_t Grafo::distancia(const std::pair<size_t, size_t>& a,
   return std::max(abs(a.first - b.first), abs(a.second - b.second));
 }
 
-// std::vector<std::pair<size_t, size_t>> ordernar(
+// std::vector<std::pair<size_t, size_t>> Grafo::ordernar(
 //     const std::vector<std::pair<size_t, size_t>>& vetor,
 //     const std::pair<size_t, size_t>& destino) {
-//   std::sort(vetor.begin(), vetor.end(), [&destino](auto a, auto b) {
-//     return distancia(a, destino) > distancia(b, destino);
-//   });
+//   std::sort(vetor.begin(), vetor.end(),
+//             [&](const std::pair<size_t, size_t>& a,
+//                 const std::pair<size_t, size_t>& b) {
+//               return distancia(a, destino) > distancia(b, destino);
+//             });
 
 //   return vetor;
 // }
