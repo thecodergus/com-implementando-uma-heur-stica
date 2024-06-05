@@ -97,8 +97,13 @@ void Grafo::exibir_mapa(){
 
 
 void Grafo::redefinir_mapa(const std::vector<std::pair<size_t, size_t>> &menor_caminho){
-    for(auto passo : menor_caminho){
-        mapa[passo] = '2';
+    for (auto &pair : mapa){
+        pair.second = "#";
+    }
+
+    for (auto &passo : menor_caminho)
+    {
+        mapa[passo] = "¤";
     }
 }
 
