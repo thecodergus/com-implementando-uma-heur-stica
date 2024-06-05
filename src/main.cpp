@@ -1,13 +1,14 @@
 #include <iostream>
 
-#include "Grafo.hpp"
+#include "grafo.hpp"
 
 int main(){
 
     auto grafo = createGraphFromFile("../mapa01.txt");
-    auto menor_caminho = grafo->a_star({1, 1}, {23, 51});
+    
+    grafo->exibir_edges();
 
-    exibir_menor_caminho(menor_caminho);
+    // exibir_menor_caminho(menor_caminho);
 
     // grafo->redefinir_mapa();
 

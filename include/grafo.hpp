@@ -24,6 +24,7 @@ class Grafo{
 
         void add_edges(const std::pair<size_t, size_t> &a, const std::pair<size_t, size_t> &b);
         void exibir_mapa();
+        void exibir_edges();
         void redefinir_mapa(const std::vector<std::pair<size_t, size_t>>& menor_caminho);
 
         std::vector<std::pair<size_t, size_t>> estrela(const std::pair<size_t, size_t> &origem, const std::pair<size_t, size_t> &destino);

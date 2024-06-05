@@ -131,3 +131,10 @@ std::vector<std::pair<size_t, size_t>> Grafo::vizinhos(const std::pair<size_t, s
 
     return resultado;
 }
+
+void Grafo::exibir_edges(){
+    for (auto &item : edges)
+    {
+        std::cout << "<" << item.first.first << ", " << item.first.second << "> -> <" << item.second.first << ", " << item.second.second << ">" << std::endl;
+    }
+}
