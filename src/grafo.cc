@@ -113,7 +113,7 @@ std::vector<std::pair<size_t, size_t>> Grafo::estrela(
   // total
 
   while (!paraVisitar.empty()) {
-    // paraVisitar = ordernar(paraVisitar, destino);
+    ordernar(paraVisitar, destino);
 
     std::pair<size_t, size_t> nodo_atual = paraVisitar.back();
     paraVisitar.pop_back();
@@ -146,7 +146,7 @@ std::vector<std::pair<size_t, size_t>> Grafo::estrela(
                                           item) != visitados.end();
                        }),
         vizinhos.end());  // Remove os itens já visitados
-    // vizinhos = ordernar(vizinhos, destino);
+    ordernar(vizinhos, destino);
 
     for (auto& vizinho : vizinhos) {
       paraVisitar.push_back(vizinho);
