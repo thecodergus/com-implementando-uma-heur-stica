@@ -41,9 +41,8 @@ class Grafo {
       const std::pair<size_t, size_t> &a);
   size_t distancia(const std::pair<size_t, size_t> &a,
                    const std::pair<size_t, size_t> &b);
-  //   std::vector<std::pair<size_t, size_t>> ordernar(
-  //       const std::vector<std::pair<size_t, size_t>> &vetor,
-  //       const std::pair<size_t, size_t> &destino);
+  void ordernar(std::vector<std::pair<size_t, size_t>> &vetor,
+                const std::pair<size_t, size_t> &destino);
 };
 
 std::shared_ptr<Grafo> createGraphFromFile(const std::string &filename);
